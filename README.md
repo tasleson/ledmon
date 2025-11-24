@@ -29,6 +29,7 @@ The following packages are required for compilation:
 | `systemd-devel`  | `libudev-devel`     | `libudev-dev`     |
 | `pciutils-devel` | `pciutils-devel`    | `libpci-dev`      |
  | `check-devel` | `check-devel` | `check` |
+| python3-test | ? | ? |
 
 ## 2. Configure package
 
