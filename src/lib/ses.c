@@ -565,6 +565,18 @@ int ses_get_slots(struct ses_pages *sp, struct ses_slot **out_slots, int *out_sl
 					((uint64_t)addr_p[19]);
 
 				slots[j].index = ap[0] & 0x10 ? ap[3] : j;
+
+				/*
+				 * ses_slot.index excludes overall elements.
+				 * If EIIOE=1, ELEMENT INDEX includes overall
+				 * elements. For all other values of EIIOE,
+				 * ELEMENT INDEX excludes overall elements.
+				 * There will be one overall element per
+				 * element type (including the current one).
+				 */
+				if ((ap[0] & 0x10) && ((ap[2] & 0x3) == 0x01))
+					slots[j].index -= (i+1);
+
 				get_led_status(sp, t->element_type, slots[j].index,
 							   &slots[j].ibpi_status);
 			}
