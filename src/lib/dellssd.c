@@ -66,16 +66,27 @@ static const struct ibpi2value ibpi2ssd[] = {
 #define APP_GET_SYSTEM_INFO		    0x59
 #define DELL_GET_IDRAC_INFO		    0xDD
 
+/*
+ * The dellssd (IPMI) method of controlling LEDs is deprecated in
+ * current Dell systems, in favor of the _DSM which Dell systems
+ * support since 17G. The _DSM does not use this code, so future
+ * updates to add later Dell systems here should not be needed.
+ */
 enum {
-  DELL_12G_MONOLITHIC = 0x10,
-  DELL_12G_MODULAR    = 0x11,
-  DELL_13G_MONOLITHIC = 0x20,
-  DELL_13G_MODULAR    = 0x21,
-  DELL_14G_MONOLITHIC = 0x30,
-  DELL_14G_MODULAR    = 0x31,
-  DELL_15G_MONOLITHIC = 0x40,
-  DELL_15G_MODULAR    = 0x41,
-
+	DELL_12G_MONOLITHIC = 0x10,
+	DELL_12G_MODULAR    = 0x11,
+	DELL_13G_MONOLITHIC = 0x20,
+	DELL_13G_MODULAR    = 0x21,
+	DELL_14G_MONOLITHIC = 0x30,
+	DELL_14G_MODULAR    = 0x31,
+	DELL_15G_MONOLITHIC = 0x40,
+	DELL_15G_MODULAR    = 0x41,
+	DELL_16G_MONOLITHIC = 0x50,
+	DELL_16G_MODULAR    = 0x51,
+	DELL_17G_MONOLITHIC = 0x60,
+	DELL_17G_MODULAR    = 0x61,
+	DELL_18G_MONOLITHIC = 0x70,
+	DELL_18G_MODULAR    = 0x71,
 };
 
 int get_dell_server_type(struct led_ctx *ctx)
@@ -109,6 +120,12 @@ int get_dell_server_type(struct led_ctx *ctx)
 	case DELL_14G_MODULAR:
 	case DELL_15G_MONOLITHIC:
 	case DELL_15G_MODULAR:
+	case DELL_16G_MONOLITHIC:
+	case DELL_16G_MODULAR:
+	case DELL_17G_MONOLITHIC:
+	case DELL_17G_MODULAR:
+	case DELL_18G_MONOLITHIC:
+	case DELL_18G_MODULAR:
 
 		ctx->dellssd_hw_gen = rdata[10];
 		return ctx->dellssd_hw_gen;
@@ -153,6 +170,12 @@ static status_t ipmi_setled(struct led_ctx *ctx, int b, int d, int f, int state)
 	case DELL_14G_MODULAR:
 	case DELL_15G_MONOLITHIC:
 	case DELL_15G_MODULAR:
+	case DELL_16G_MONOLITHIC:
+	case DELL_16G_MODULAR:
+	case DELL_17G_MONOLITHIC:
+	case DELL_17G_MODULAR:
+	case DELL_18G_MONOLITHIC:
+	case DELL_18G_MODULAR:
 
 		data[1] = DELL_OEM_STORAGE_GETDRVMAP_14G;
 		break;
@@ -197,6 +220,12 @@ static status_t ipmi_setled(struct led_ctx *ctx, int b, int d, int f, int state)
 	case DELL_14G_MODULAR:
 	case DELL_15G_MONOLITHIC:
 	case DELL_15G_MODULAR:
+	case DELL_16G_MONOLITHIC:
+	case DELL_16G_MODULAR:
+	case DELL_17G_MONOLITHIC:
+	case DELL_17G_MODULAR:
+	case DELL_18G_MONOLITHIC:
+	case DELL_18G_MODULAR:
 
 		data[1] = DELL_OEM_STORAGE_SETDRVSTATUS_14G;
 		break;
